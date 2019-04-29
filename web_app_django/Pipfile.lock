@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "68309cd71a258c30a39567fce09a09ad5c4ff0bdc85b6fba22b47598c985c883"
+            "sha256": "6bf8356ff4027a6e95b6a94cafab1c643f65abde56d022411108ef7b480f149b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,14 @@
         ]
     },
     "default": {
+        "couchdb": {
+            "hashes": [
+                "sha256:1386a1a43f25bed3667e3b805222054940d674fa1967fa48e9d2012a18630ab7",
+                "sha256:13a28a1159c49f8346732e8724b9a4d65cba54bec017c4a7eeb1499fe88151d1"
+            ],
+            "index": "pypi",
+            "version": "==1.2"
+        },
         "django": {
             "hashes": [
                 "sha256:7c3543e4fb070d14e10926189a7fcf42ba919263b7473dceaefce34d54e8a119",

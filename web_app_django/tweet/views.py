@@ -3,19 +3,23 @@ from django.http import Http404,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from couchdb import Server
 
-SERVER = Server('http://127.0.0.1:5984')
+SERVER = Server('http://172.18.0.1:5984')
 if (len(SERVER) == 0):
     SERVER.create('tweet_results')
 # Create your views here.
 
 def index(request):
-    docs = SERVER['tweet_results']
-    if request.method == "POST":
-        title = request.POST['title'].replace(' ','')
-        docs[title] = {'title':title,'text':""}
-        return HttpResponseRedirect(u"/doc/%s/" % title)
-    context = {'rows':docs}
-    return render(request,'index.html',context = context)
+    try:
+        docs = SERVER['tweet_results']
+        if request.method == "POST":
+            title = request.POST['title'].replace(' ','')
+            docs[title] = {'title':title,'text':""}
+            return HttpResponseRedirect(u"/doc/%s/" % title)
+        context = {'rows':docs}
+    
+        return render(request,'index.html',context = context)
+    except:
+        print(Exception)
 
 def detail(request,id):
     docs = SERVER['docs']

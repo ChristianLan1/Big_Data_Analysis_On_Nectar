@@ -83,7 +83,7 @@ DATABASES = {
     }
 }
 COUCHDB_DATABASES = (
-    ('tweet', 'http://10.0.2.15:5984/tweet_results'),
+    ('tweet', 'http://0.0.0.0:5984/tweet_results'),
 )
 
 
