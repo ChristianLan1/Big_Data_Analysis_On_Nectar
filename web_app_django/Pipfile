@@ -7,9 +7,6 @@ verify_ssl = true
 
 [packages]
 django = "*"
-counchdbkit = "*"
-couchdb = "*"
-couchdbkit = "*"
 
 [requires]
 python_version = "3.6"
