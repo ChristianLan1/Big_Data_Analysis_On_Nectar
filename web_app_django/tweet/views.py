@@ -2,31 +2,31 @@ from django.shortcuts import render
 from django.http import Http404,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from couchdb import Server
-
-SERVER = Server('http://172.18.0.1:5984')
-if (len(SERVER) == 0):
-    SERVER.create('tweet_results')
+try:
+    SERVER = Server('http://172.18.0.1:5984')
+    if (len(SERVER) == 0):
+        SERVER.create('tweet_results')
+    error = "no"
+except:
+    error = "socket error. Unable to connect to couchdb"
 # Create your views here.
 
 def index(request):
-    try:
-        docs = SERVER['tweet_results']
-        if request.method == "POST":
-            title = request.POST['title'].replace(' ','')
-            docs[title] = {'title':title,'text':""}
-            return HttpResponseRedirect(u"/doc/%s/" % title)
-        context = {'rows':docs}
     
-        return render(request,'index.html',context = context)
-    except:
-        print(Exception)
+    
+    if error == "no":
+        docs = SERVER['tweet_results']
+        print(docs)
+        print(docs['0f664afca04e2b25008526baf10008ed'])
+        
 
-def detail(request,id):
-    docs = SERVER['docs']
-    doc = docs[id]
-            
-    if request.method =="POST":
-        doc['title'] = request.POST['title'].replace(' ','')
-        doc['text'] = request.POST['text']
-        docs[id] = doc
-    return render_to_response('tweet/detail.html',{'row':doc})
+   
+
+        context = {'file':docs['0f664afca04e2b25008526baf10008ed']}
+    else:
+        context = {'file':error}
+
+    return render(request,'index.html',context = context)
+    
+        
+
