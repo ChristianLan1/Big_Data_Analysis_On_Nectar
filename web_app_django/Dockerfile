@@ -9,11 +9,11 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /ccc-assignment2-team69/web_app_django/
 
 # Install dependencies
-RUN pip install pipenv
+RUN pip3 install pipenv
 COPY Pipfile Pipfile.lock /ccc-assignment2-team69/web_app_django/
 COPY requirements.txt /ccc-assignment2-team69/web_app_django/
 RUN pipenv install --system
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Copy project
 COPY . /ccc-assignment2-team69/web_app_django/

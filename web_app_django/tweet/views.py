@@ -17,12 +17,11 @@ def index(request):
     if error == "no":
         docs = SERVER['tweet_results']
         print(docs)
-        print(docs['0f664afca04e2b25008526baf10008ed'])
-        
+        for doc in docs:
 
-   
-
-        context = {'file':docs['0f664afca04e2b25008526baf10008ed']}
+            print(docs[doc])
+            
+            context = {'file':docs[doc]}
     else:
         context = {'file':error}
 
