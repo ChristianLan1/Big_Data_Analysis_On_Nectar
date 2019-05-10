@@ -3,7 +3,7 @@ from django.http import Http404,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from couchdb import Server
 try:
-    SERVER = Server('http://10.12.154.66:5984')
+    SERVER = Server('http://172.26.38.157:5984')
     if (len(SERVER) == 0):
         SERVER.create('tweet_results')
     error = "no"
