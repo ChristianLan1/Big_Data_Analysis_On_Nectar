@@ -16,12 +16,22 @@ def index(request):
     
     if error == "no":
         docs = SERVER['tweet_results']
-        print(docs)
-        for doc in docs:
+        #print(docs)
+        #print(docs.view('city/city-view',key = "melbourne"))
 
-            print(docs[doc])
+
+        #GET /tweet_resutls/_design/city/_view/city-view HTTP/1.1
+
+        cityInfo = []
+        for doc in docs.view('city/city-view',group = True):
+
+            print(doc.key, doc.value)
+            cityInfo.append(doc)
+        print(cityInfo)
             
-            context = {'file':docs[doc]}
+        context = {'cityInfo':cityInfo}
+
+        #context = {'file':2}
     else:
         context = {'file':error}
 
