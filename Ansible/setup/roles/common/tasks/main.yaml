@@ -1,0 +1,37 @@
+# this file is for installing dependencies on the host
+
+- name: Gather facts of remote host
+  setup:
+    gather_subset: all
+
+- name: Install dependencies
+  tags: always
+  become: yes
+  apt:
+    name: ['apt-transport-https', 'build-essential', 'ca-certificates', 'curl', 'git', 'python-pip', 'python-setuptools']
+    state: latest
+    install_recommends: no
+    update_cache: yes
+
+# pip install -- upgrade pip
+- name: Update pip
+  tags: always
+  become: yes
+  pip:
+    name: ['pip']
+    state: latest
+
+- name: add internet proxy
+  lineinfile:
+    dest: /etc/environment
+    regexp: '^\n'
+    insertafter: '^\n'
+    line: "{{ item.line }}" 
+  with_items:
+    - { line: 'http_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'https_proxy="http://wwwproxy.unimelb.edu.au:8000"' } 
+    - { line: 'ftp_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'no_proxy=localhost,127.0.0.1,127.0.1.1,ubuntu' }
+
+
+       
