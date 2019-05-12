@@ -8,6 +8,7 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from sklearn.externals import joblib
+import general_process as GP
 
 class listener(StreamListener):
     def __init__(self,path):
@@ -27,6 +28,7 @@ class listener(StreamListener):
         return dic
     def on_data(self,data):
         try:
+            gp = GP()
             db = self.couch['raw_tweets']
             id_db = self.couch['user_id']
             pc_db = self.couch['tweet_results']
@@ -34,8 +36,9 @@ class listener(StreamListener):
             dic = self.convertValue(content)
             id_doc = {"_id":str(dic["user_id"]),"user_name":content['user']['name'],"isSearched":False}
             # print(id_doc)
-            p_dic = date_process(dic,self.model)
+            p_dic = gp.data_process(dic,self.model)
             if p_dic != None:
+                
                 process_db.save(p_dic)
             id_db.save(id_doc)
             db.save(dic)

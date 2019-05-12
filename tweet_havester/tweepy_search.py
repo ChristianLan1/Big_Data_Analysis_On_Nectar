@@ -43,6 +43,7 @@ class TweetSearchHavester():
         process_db = self.couch['tweet_results']
         for tweet in tweepy.Cursor(api.user_timeline,id = user_id ).items(50):
             # save most recent tweets
+            gp = GP()
             dic = {}
             dic['_id'] = tweet.id_str
             dic['create_time'] = str(tweet.created_at)
@@ -55,7 +56,7 @@ class TweetSearchHavester():
                 dic['location'] = tweet.user.location
             # print(dic)
             try:
-                p_dic = date_process(dic,self.model)
+                p_dic = gp.data_process(dic,self.model)
                 if p_dic != None:
                     process_db.save(p_dic)
                 db.save(dic)
