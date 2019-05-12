@@ -5,12 +5,8 @@ volumes:
     mountpoint: /data
 
 # define the working directory
-working_dir: something
+working_dir: myWorkingDirectory
 
-# details for database
-database_name: something
-database_user: something
-database_password: something
-mysql_root_password: "P@ssword"
+
 
 
