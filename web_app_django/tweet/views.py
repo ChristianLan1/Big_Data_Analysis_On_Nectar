@@ -52,6 +52,7 @@ def index(request):
         #print(docs)
         #print(docs.view('city/city-view',key = "melbourne"))
         countId = []
+        countDomesitc = 0
         #print(docs['f6376ce946ac201c045408615e00d502'])
         for doc in docsNsw:
             features = docsNsw[doc]['features']
