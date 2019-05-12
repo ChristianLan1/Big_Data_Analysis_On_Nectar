@@ -1,21 +1,38 @@
+{% load static %}
 <html> <head>
     <title>Comfy Django</title>
     </head>
     <body>
     <h1>CouchDB in Django</h1>
     <form method="post" action=".">
-    <table>
-      <tr>
-        <td> Title for new document </td>
-        <td><input type="text" name="title"></td>
-        <td><input type="submit"></td>
-      </tr>
-    </table>
-    </form>
+    <script>
+    var valmel = "{{city.value}}";
+
+    </script>
+    <img src="https://www.teachingtreasures.com.au/teaching-tools/gknowledgeK-3/major-cities/aussiemap.gif" 
+         style='position:absolute;left:15px;top:35px;z-index:0;'width="745" height="586" alt="MapTest" usemap="#ausmap">
+    <img src="{% static 'images/circle.png'%}"
+         style='position:absolute;left:520px;top:455px;z-index:1;'width= height="150"alt="circlemel">
+    
+         <map name="ausmap">
+        <area shape="circle" coords="567,483,25" alt="Melbourne" href="sun.htm">
+        
+    </map>
+   
+    
+    
     <hr>
-    <ol>
+    
+    {% if cityInfo %}
+      {% for city in cityInfo %}
+      <td>{{city.key}}</td>
+      <td> {{city.value}}</td>
+     
+       {% endfor %}
+    {%else%}
+    <hr>NO DATA</hr>
+    {% endif %}
+     
       
-      <li>{{ file.text }}</li>
-      
-    </ol>
+    
     </body> </html>

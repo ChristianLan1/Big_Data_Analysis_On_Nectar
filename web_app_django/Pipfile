@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 django = "*"
 couchdb = "*"
+djangp = "*"
 
 [requires]
 python_version = "3.6"
