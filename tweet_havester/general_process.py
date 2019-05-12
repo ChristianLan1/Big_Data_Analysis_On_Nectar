@@ -21,6 +21,8 @@ def data_process(tweet,model):
         if city in location.lower():
             #generalize city name
             location=city
+        else:
+            return None
     
     p_tweet={
     '_id':id,
