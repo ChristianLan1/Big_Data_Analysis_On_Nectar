@@ -12,19 +12,30 @@
       <td> {{city.value}}</td>
      
        {% endfor %}
-    {%else%}
-    <hr>NO DATA</hr>
-    {% endif %}
-    
-     <td>{{melbourne}}</td>
-     <td>{{sydney}}</td>
-     <td>{{adelaide}}</td>
-     <td>{{perth}}</td>
-     <td>{{brisbane}}</td>
+       {% for city1 in cityTotal %}
+      <td>{{city1.melbourne}}</td>
+      <td> {{city1.sydney}}</td>
+      <td> {{city1.adelaide}}</td>
+      <td> {{city1.perth}}</td>
+      <td> {{city1.brisbane}}</td>
+     
+       {% endfor %}
+      
      <td>{{NswCount}}</td>
      <td>{{VicCount}}</td>
-     <td>{{SacCount}}</td>
-       
+     <td>{{SaCount}}</td>
+     {% for cityOld in cityTotalOld %}
+      <td>{{cityOld.melbourne}}</td>
+      <td> {{cityOld.sydney}}</td>
+      <td> {{cityOld.adelaide}}</td>
+     
+       {% endfor %}
+    {%else%}
+    <hr>NO DATA</hr>
+    
+    
+     
+     {% endif %}
     </body>
      
       
