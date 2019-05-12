@@ -1,0 +1,29 @@
+# Create an instance on NeCTAR
+- name: Create instances
+  os_server:
+    name: '{{ item.instance_name }}'
+    image: '{{ item.instance_image }}'
+    key_name: '{{ item.instance_key_name }}'
+    flavor: '{{ item.instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{sg_names }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ instances }}'
+  register: os_instance
+
+- debug:
+    msg: "Instance {{ instance_name }} has been created. IP address is {{ os_instance.openstack.public_v4 }}"
+  when: os_instance.openstack is defined
+
+#get a list of instance Ids from the return value of os_instance
+- name: Create a list of instance Ids
+  set_fact:
+    os_instance_ids: '{{ os_instance_ids|default([]) + [ item.id ] }}'
+  loop: '{{ os_instance.results }}'
+
+- debug:
+    msg: "Instance {{ os_instance_ids }} has been created."
+  when: os_instance.name is defined

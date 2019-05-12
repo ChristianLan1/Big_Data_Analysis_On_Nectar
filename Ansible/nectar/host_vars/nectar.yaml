@@ -1,0 +1,58 @@
+# this file states common variables
+
+# availability zone
+availability_zone: melbourne-qh2-uom
+
+# volume
+volumes:
+  - vol_name: master volume
+    vol_size: 10
+  - vol_name: automated_vol_1
+    vol_size: 30
+  - vol_name: automated_vol_2
+    vol_size: 30
+
+# security groups
+security_groups:
+  - name: automated_ssh
+    description: "Automated security group for SSH access"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    #remote_ip_prefix: 128.250.0.0/16 (from unimelb)
+    remote_ip_prefix: 0.0.0.0/0 #(accessing from everywhere)
+  - name: automated_http
+    description: "Automated security group for HTTP access"
+    protocol: tcp 
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+  - name: automated_CouchDB
+    description: "Automated security group for CouchDB access"
+    protocol: tcp 
+    port_range_min: 5984
+    port_range_max: 5984
+    remote_ip_prefix: 0.0.0.0/0
+  - name: automated_WebServer
+    description: "Automated security group for Web Server access"
+    protocol: tcp 
+    port_range_min: 5555
+    port_range_max: 5555
+    remote_ip_prefix: 0.0.0.0/0
+
+# instance
+instances:
+  - instance_name: master
+    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
+    instance_key_name: xinjie
+    instance_flavor: uom.mse.1c4g
+  - instance_name: automated1
+    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
+    instance_key_name: xinjie
+    instance_flavor: uom.mse.2c9g
+  - instance_name: automated2
+    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
+    instance_key_name: xinjie
+    instance_flavor: uom.mse.2c9g
+  
+  

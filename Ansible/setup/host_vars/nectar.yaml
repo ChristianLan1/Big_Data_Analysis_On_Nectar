@@ -1,0 +1,16 @@
+# define the device and mounting point of volumes
+# volume
+volumes:
+  - device: /dev/vdb
+    mountpoint: /data
+
+# define the working directory
+working_dir: something
+
+# details for database
+database_name: something
+database_user: something
+database_password: something
+mysql_root_password: "P@ssword"
+
+
