@@ -12,6 +12,7 @@ except:
 # Create your views here.
 
 def index(request):
+    context = {}
     
     
     if error == "no":
@@ -29,6 +30,7 @@ def index(request):
 
             print(doc.key, doc.value)
             cityInfo.append(doc)
+        print("space")
         for doc in docs.view('results/cityTweet-view',group = True):
 
             #print(doc.key,doc.value)
@@ -46,8 +48,9 @@ def index(request):
 
         #print(cityInfo)
 
-        context = {'cityTotal':cityTotal}
-        context = {'cityInfo':cityInfo}
+        context['cityTotal'] = cityTotal
+        context['cityInfo'] = cityInfo
+        
 
         docsNsw = SERVER['aurin_nsw']
         #print(docs)
@@ -59,7 +62,7 @@ def index(request):
             features = docsNsw[doc]['features']
             for feature in features:
                 countId.append(feature["id"])
-            print(len(countId))
+            #print(len(countId))
         docsNswDomestic = SERVER['aurin_nsw_domestic']
         for doc in docsNswDomestic.view('domesitc/new-view'):
             for element in doc.value:
@@ -67,7 +70,7 @@ def index(request):
                 countDomesitc += doc.value[element]
         countDomesitc += len(countId)
         print(countDomesitc)
-        context = {'NswCount':countDomesitc}
+        context['NswCount'] = countDomesitc
             
             #print(docs[doc]['features'])
         #GET /tweet_resutls/_design/city/_view/city-view HTTP/1.1
@@ -89,7 +92,7 @@ def index(request):
                         else:
                             count += properties[element]
             print(count)
-            context = {'VicCount':count}
+            context['VicCount'] = count
         docsSa = SERVER['aurin_sa']
         countForSa = 0
         for doc in docsSa.view('sa/new-view'):
@@ -102,7 +105,31 @@ def index(request):
                             #print(countForSa)
                             countForSa += properties[element]
         print(countForSa)
-        context = {'SaCount':countForSa}
+        context['SaCount'] = countForSa
+
+
+
+
+
+        docs = SERVER['tweet_2014_raw']
+        cityInfoOld = []
+        cityTotalOld = []
+        cityPercentageOld = {}
+        for doc in docs.view('results/result-view',group = True):
+            cityInfoOld.append(doc)
+            print(doc.key, doc.value)
+        print("total")
+        for doc in docs.view('results/cityTweet-view',group = True):
+            for data in cityInfoOld:
+                if data.key == doc.key:
+                    number = (data.value/doc.value)*100
+                    percentage = str(round(number,2))+"%"
+                    #print(percentage)
+                    cityPercentageOld[data.key] = percentage
+        cityTotalOld.append(cityPercentageOld)
+        context['cityTotalOld'] = cityTotalOld
+        print(cityTotalOld)
+
 
         #context = {'file':2}
     else:
