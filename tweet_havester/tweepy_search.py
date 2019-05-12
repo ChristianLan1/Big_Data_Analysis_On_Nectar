@@ -1,16 +1,17 @@
 #  -*- coding: utf-8 -*-
 import json
-import csv
 import os
 import couchdb
 import tweepy
 from tweepy import OAuthHandler
+from sklearn.externals import joblib
 
 
 
 class TweetSearchHavester():
     def __init__(self,couch):
         self.couch = couch
+        self.model = joblib.load("./train_model.m")
 
     def run(self, ids , city):
         dict = {}
@@ -39,6 +40,7 @@ class TweetSearchHavester():
     def get_all_tweets(self, user_id, api):
         new_tweets = api.user_timeline(user_id=user_id, count=50)
         db = self.couch['raw_tweets']
+        process_db = self.couch['tweet_results']
         for tweet in tweepy.Cursor(api.user_timeline,id = user_id ).items(50):
             # save most recent tweets
             dic = {}
@@ -53,6 +55,9 @@ class TweetSearchHavester():
                 dic['location'] = tweet.user.location
             # print(dic)
             try:
+                p_dic = date_process(dic,self.model)
+                if p_dic != None:
+                    process_db.save(p_dic)
                 db.save(dic)
             except:
                 pass

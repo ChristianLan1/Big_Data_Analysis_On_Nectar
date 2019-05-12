@@ -7,10 +7,12 @@ import threading
 from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+from sklearn.externals import joblib
 
 class listener(StreamListener):
     def __init__(self,path):
         self.couch = couchdb.Server(path)
+        self.model = joblib.load("./train_model.m")
     def convertValue(self,origin):
         dic = {}
         dic['_id'] = origin["id_str"]
@@ -27,10 +29,14 @@ class listener(StreamListener):
         try:
             db = self.couch['raw_tweets']
             id_db = self.couch['user_id']
+            pc_db = self.couch['tweet_results']
             content = json.loads(data)
             dic = self.convertValue(content)
             id_doc = {"_id":str(dic["user_id"]),"user_name":content['user']['name'],"isSearched":False}
             # print(id_doc)
+            p_dic = date_process(dic,self.model)
+            if p_dic != None:
+                process_db.save(p_dic)
             id_db.save(id_doc)
             db.save(dic)
             # print("success")
