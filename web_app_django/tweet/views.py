@@ -39,13 +39,14 @@ def index(request):
                     percentage = str(round(number,2))+"%"
                     #print(percentage)
                     cityPercentage[data.key] = percentage
+        cityTotal.append(cityPercentage)
         
 
         #print(cityTotal)
 
         #print(cityInfo)
 
-        context = cityPercentage
+        context = {'cityTotal':cityTotal}
         context = {'cityInfo':cityInfo}
 
         docsNsw = SERVER['aurin_nsw']
