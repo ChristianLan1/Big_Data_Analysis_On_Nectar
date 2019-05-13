@@ -541,9 +541,9 @@ html {
     display: block;
     color: rgb(253, 253, 253);
     position: absolute;
-    transform: translate(25%, -70%);
+    transform: translate(5%, -70%);
     font-size: 1.35rem;
-    width: 31rem;
+    width: 33rem;
     padding: 0.75rem 1rem;
     text-align: left;
     background: rgba(4, 42, 66, 0.75);

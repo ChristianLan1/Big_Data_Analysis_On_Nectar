@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>COMP90024 Team:69</title>
-    <link href="http://a.amap.com/Loca/static/manual/example/style/demo.css" rel="stylesheet">
+    <!-- <link href="http://a.amap.com/Loca/static/manual/example/style/demo.css" rel="stylesheet"> -->
     <style>
         html,
         body,
@@ -140,7 +140,7 @@
 <script>
     
     var map = Loca.create('container', {
-       
+        mapStyle: 'amap://styles/070f548e06917955722ed5b9ac9a06f2',
         zoom: 4.5,
         center: [150, -28]
     });
@@ -162,12 +162,12 @@
     layer.setOptions({
         style: {
             radius: function(data){
-                return data.value.size
+                return 15+data.value.size/4
             },
-            color: '#c54400',
+            color: '#FFFF00',
             borderColor: '#c5001f',
             borderWidth: 1.5,
-            opacity: 0.3
+            opacity: 0.6
         },
         
     });
@@ -206,7 +206,7 @@
 
     layer0.setOptions({
         style: {
-            radius:5,
+            radius:8,
             color: '#626262',
             borderColor: '#626262',
             borderWidth: 1.5,
