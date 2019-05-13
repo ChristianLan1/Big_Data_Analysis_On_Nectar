@@ -111,7 +111,7 @@ def index(request):
 
 
 
-        docs = SERVER['tweet_2014_raw']
+        docs = SERVER['tweet_2014_results']
         cityInfoOld = []
         cityTotalOld = []
         cityPercentageOld = {}
@@ -123,7 +123,7 @@ def index(request):
             for data in cityInfoOld:
                 if data.key == doc.key:
                     number = (data.value/doc.value)*100
-                    percentage = str(round(number,2))+"%"
+                    percentage = round(number,2)
                     #print(percentage)
                     cityPercentageOld[data.key] = percentage
         cityTotalOld.append(cityPercentageOld)

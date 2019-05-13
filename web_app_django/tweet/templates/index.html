@@ -1,43 +1,270 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>COMP90024 Team:69</title>
+    <link href="http://a.amap.com/Loca/static/manual/example/style/demo.css" rel="stylesheet">
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container" class="container">
+</div>
+    <div class="title-banner">
+        <div class="title-content">
+            <p>The Analysis of the sin of Wrath</p>
+            <p>based on tweets across the major cities in Melbourne</p>
+        </div>
+    </div>
+
+<div class="info-hub">
+    <div class="sub_window" style="width:auto">
+            <div class="title">
+                <p>Hate Speech Rate VS number of assault violence </p>
+            </div>
+                <div id="chart" class="chart" ></div>
+    </div>
+</div>
+
+              
+    
+
+{% if cityInfo %}
+    
+{% for city in cityInfo %}
+    {% for city1 in cityTotal %}
+    
+    {% if city.key == "melbourne" %}
+    <script type="text/javascript">
+    var melval = "{{city.value}}";
+    var melrate = "{{city1.melbourne}}";
+    </script>
+    {% endif %}
+   
+   {% if city.key == "sydney" %}
+   <script>
+    var sydval = "{{city.value}}";
+    var sydrate = "{{city1.sydney}}";
+   </script>
+   {% endif %}
+   
+   
+   {% if city.key == "adelaide" %}
+   <script>
+    var adeval = "{{city.value}}";
+    var aderate = "{{city1.adelaide}}";
+
+   </script>
+   {% endif %}
+
+   {% if city.key == "brisbane" %}
+   <script>
+    var brival = "{{city.value}}";
+    var brirate = "{{city1.brisbane}}";
+
+   </script>
+   {% endif %}
+   
+   {% if city.key == "perth" %}
+   <script>
+    var perval = "{{city.value}}";
+    var perrate = "{{city1.perth}}";
+   </script>
+   {% endif %}
+
+   
+   {% endfor %}
+
+ {% endfor %}
+ <script src="{% static 'js/district.js' %}"></script>
+ 
 
 
-         
-    <body>
+<td>{{NswCount}}</td>
+<script>
+    var nswcount = "{{NswCount}}";
+</script>
+<td>{{VicCount}}</td>
+<script>
+    var viccount = "{{VicCount}}";
+</script>
+<td>{{SaCount}}</td>
+<script>
+    var sacount = "{{SaCount}}";
+</script>
+{% for cityOld in cityTotalOld %}
+<td>{{cityOld.melbourne}}</td>
+<script>
+    var melold = "{{cityOld.melbourne}}";
+</script>
+<td> {{cityOld.sydney}}</td>
+<script>
+    var sydold = "{{cityOld.sydney}}";
+</script>
+<td> {{cityOld.adelaide}}</td>
+<script>
+    var adeold = "{{cityOld.adelaide}}";
+</script>
+ {% endfor %}
+{%else%}
+<hr>NO DATA</hr>
+
+
+
+{% endif %}
+<!--<script src="./script/loca.js"></script>-->
+<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+<link rel="stylesheet" href="{% static 'css/hover_window.css' %}"/>
+<script src="http://webapi.amap.com/loca?v=1.2.0&key=393144ee0738b91f3e93b0c6d0c36562"></script>
+<script src= "{% static 'js/infoshow.js' %}"></script>
+<script src = "https://www.gstatic.com/charts/loader.js"></script>
+<script type = "text/javascript">
+    google.charts.load('current', {packages: ['corechart']});     
+ </script>
+<!-- <script src=".\infoshow.js"></script> -->
+<script src = "{% static 'js/district.js' %}"></script>
+
+<script>
     
-    {% if cityInfo %}
-      {% for city in cityInfo %}
-      <td>{{city.key}}</td>
-      <td> {{city.value}}</td>
-     
-       {% endfor %}
-       {% for city1 in cityTotal %}
-      <td>{{city1.melbourne}}</td>
-      <td> {{city1.sydney}}</td>
-      <td> {{city1.adelaide}}</td>
-      <td> {{city1.perth}}</td>
-      <td> {{city1.brisbane}}</td>
-     
-       {% endfor %}
-      
-     <td>{{NswCount}}</td>
-     <td>{{VicCount}}</td>
-     <td>{{SaCount}}</td>
-     {% for cityOld in cityTotalOld %}
-      <td>{{cityOld.melbourne}}</td>
-      <td> {{cityOld.sydney}}</td>
-      <td> {{cityOld.adelaide}}</td>
-     
-       {% endfor %}
-    {%else%}
-    <hr>NO DATA</hr>
-    
-    
-     
-     {% endif %}
-    </body>
-     
-      
-    
-   </html>
+    var map = Loca.create('container', {
+       
+        zoom: 4.5,
+        center: [150, -28]
+    });
+
+    var layer = Loca.visualLayer({
+        eventSupport: true,    // selectStyle 配置需要开启 eventSupport: true
+        container: map,
+        type: 'point',
+        shape: 'circle'
+    });
+   
+
+    layer.on('mousemove', function (ev) {
+        // 事件类型
+        var type = ev.type;
+        // 当前元素的原始数据
+        var rawData = ev.rawData;
+        
+        // 原始鼠标事件
+        var originalEvent = ev.originalEvent;
+        
+        openInfoWin(map.getMap(), originalEvent, {
+            'City': rawData.name,
+            'Hate_Speech_Rate': rawData.rate
+        });
+    });
+
+    layer.on('mouseleave', function (ev) {
+        closeInfoWin();
+    });
+
+    layer.setData(districts, {
+        lnglat: 'center'
+    });
+
+    layer.setOptions({
+        style: {
+            radius: function(data){
+                return data.value.size
+            },
+            color: '#c54400',
+            borderColor: '#c5001f',
+            borderWidth: 1.5,
+            opacity: 0.3
+        },
+        
+    });
+
+    layer.render();
+
+    var layer0 = Loca.visualLayer({
+        eventSupport: true,    // selectStyle 配置需要开启 eventSupport: true
+        container: map,
+        type: 'point',
+        shape: 'circle'
+    });
+
+    layer0.setData(districts, {
+        lnglat: 'center'
+    });
+
+    layer0.setOptions({
+        style: {
+            radius:5,
+            color: '#626262',
+            borderColor: '#626262',
+            borderWidth: 1.5,
+            opacity: 0.8
+        },
+        selectStyle: {
+            radius: 10,
+            color: '#ffe30a',
+            opacity: 0.8
+        }
+    });
+
+    layer0.render();
+
+
+    function drawChart() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            var nsw = parseFloat(nswcount);
+            var vic = parseFloat(viccount);
+            var sa = parseFloat(sacount);
+            var syd =parseFloat(sydold);
+            var mel = parseFloat(melold);
+            var ade = parseFloat(adeold);
+            data.addColumn('string', 'State');
+            data.addColumn('number', 'Criminal Stastics from Aurin');
+            data.addColumn('number', 'Hate Speech Percentage');
+           
+            data.addRows([
+               ['Nsw',  nsw, syd],
+               ['Vic',  vic, mel],
+               ['Sa',  sa,  ade]
+              
+               
+            ]);
+               
+            // Set chart options
+            var options = {
+               hAxis: {
+                  title: 'State'
+               },
+               vAxis: {
+                  title: ''
+               },   
+               'width':450,
+               'height':350,
+               pointsVisible: true,
+               backgroundColor:"transparent" 
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+            chart.draw(data, options);
+         }
+         google.charts.setOnLoadCallback(drawChart);
+
+
+</script>
+
+
+</body>
+</html>
+
+
+        
