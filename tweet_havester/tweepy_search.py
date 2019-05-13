@@ -67,11 +67,16 @@ class TweetSearchHavester():
 
 
 
-if __name__ == '__main__':
-    couch = couchdb.Server('http://admin:password@127.0.0.1:5984/')
+def run(server_path):
+    couch = couchdb.Server(server_path)
     db = couch['user_id']
     # couch.create('test_db')
-    city = ["melbourne","sydney","perth","adelaide","brisbane"]
+    dict = {}
+    with open('./tweet_havester_config.json','r') as f:
+        dict = json.load(f)
+    cities = []
+    for city in dict:
+        cities.append(city)
     switch = 0
     count = 0
     ids = list()
@@ -88,7 +93,7 @@ if __name__ == '__main__':
             if(count > 20):
                 switch = (switch+1)%5
                 count = 0
-                a.run(ids,city[switch])
+                a.run(ids,cities[switch])
                 for id in ids:
                     data = db[id]
                     data['isSearched'] = True
