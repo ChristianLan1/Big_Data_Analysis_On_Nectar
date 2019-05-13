@@ -1,6 +1,7 @@
 #  -*- coding: utf-8 -*-
 import json
 import os
+import time
 import couchdb
 import tweepy
 from tweepy import OAuthHandler
@@ -81,8 +82,13 @@ def run(server_path):
     count = 0
     ids = list()
     a = TweetSearchHavester(couch)
-    while True:
-        print("start a new round")
+    while True:   
+        ids = list()
+        # if user id pool less than 40, won't start for query search
+        if(len(db) < 40):
+            time.wait(100)
+            continue
+        print("start a new round on search")
         for id in db:
             data = db[id]
             if(not data['isSearched']):
