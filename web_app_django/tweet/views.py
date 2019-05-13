@@ -69,7 +69,7 @@ def index(request):
                 #print(doc.value[element])
                 countDomesitc += doc.value[element]
         countDomesitc += len(countId)
-        countDomestic = (countDomestic/7410000)*100
+        countDomesitc = (countDomesitc/7410000)*100
         print(countDomesitc)
         
         context['NswCount'] = countDomesitc
@@ -93,8 +93,9 @@ def index(request):
                             continue
                         else:
                             count += properties[element]
+            
+            count = (count/5740000)*100
             print(count)
-            cout = (cout/5740000)*100
             context['VicCount'] = count
         docsSa = SERVER['aurin_sa']
         countForSa = 0
