@@ -11,11 +11,11 @@ services:
       - "5984:5984"
   web:
     build: .
-    command: python /ccc-assignment2-team69/web_app_django/manage.py runserver 0.0.0.0:8000
+    command: python /ccc-assignment2-team69/web_app_django/manage.py runserver 0.0.0.0:5555
     volumes:
       - .:/ccc-assignment2-team69/web_app_django/
     ports:
-      - 8000:8000
+      - 5555:5555
     depends_on:
       - couchdb
 
