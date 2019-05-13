@@ -24,7 +24,7 @@
     <div class="title-banner">
         <div class="title-content">
             <p>The Analysis of the sin of Wrath</p>
-            <p>based on tweets across the major cities in Melbourne</p>
+            <p>based on tweets across the major cities in Australia</p>
         </div>
     </div>
 
@@ -43,19 +43,17 @@
 {% if cityInfo %}
     
 {% for city in cityInfo %}
-    {% for city1 in cityTotal %}
+    
     
     {% if city.key == "melbourne" %}
     <script type="text/javascript">
     var melval = "{{city.value}}";
-    var melrate = "{{city1.melbourne}}";
     </script>
     {% endif %}
    
    {% if city.key == "sydney" %}
    <script>
     var sydval = "{{city.value}}";
-    var sydrate = "{{city1.sydney}}";
    </script>
    {% endif %}
    
@@ -63,7 +61,6 @@
    {% if city.key == "adelaide" %}
    <script>
     var adeval = "{{city.value}}";
-    var aderate = "{{city1.adelaide}}";
 
    </script>
    {% endif %}
@@ -71,7 +68,6 @@
    {% if city.key == "brisbane" %}
    <script>
     var brival = "{{city.value}}";
-    var brirate = "{{city1.brisbane}}";
 
    </script>
    {% endif %}
@@ -79,19 +75,25 @@
    {% if city.key == "perth" %}
    <script>
     var perval = "{{city.value}}";
-    var perrate = "{{city1.perth}}";
    </script>
    {% endif %}
 
-   
    {% endfor %}
 
+ 
+ {% for city1 in cityTotal %}
+ <script type="text/javascript">
+    var melrate = "{{city1.melbourne}}";
+    var sydrate = "{{city1.sydney}}";
+    var aderate = "{{city1.adelaide}}";
+    var brirate = "{{city1.brisbane}}";
+    var perrate = "{{city1.perth}}";
+   </script>
+   
  {% endfor %}
  <script src="{% static 'js/district.js' %}"></script>
- 
 
-
-<td>{{NswCount}}</td>
+ <td>{{NswCount}}</td>
 <script>
     var nswcount = "{{NswCount}}";
 </script>
@@ -151,24 +153,7 @@
     });
    
 
-    layer.on('mousemove', function (ev) {
-        // 事件类型
-        var type = ev.type;
-        // 当前元素的原始数据
-        var rawData = ev.rawData;
-        
-        // 原始鼠标事件
-        var originalEvent = ev.originalEvent;
-        
-        openInfoWin(map.getMap(), originalEvent, {
-            'City': rawData.name,
-            'Hate_Speech_Rate': rawData.rate
-        });
-    });
-
-    layer.on('mouseleave', function (ev) {
-        closeInfoWin();
-    });
+    
 
     layer.setData(districts, {
         lnglat: 'center'
@@ -196,6 +181,25 @@
         shape: 'circle'
     });
 
+    layer0.on('mousemove', function (ev) {
+        // 事件类型
+        var type = ev.type;
+        // 当前元素的原始数据
+        var rawData = ev.rawData;
+        
+        // 原始鼠标事件
+        var originalEvent = ev.originalEvent;
+        
+        openInfoWin(map.getMap(), originalEvent, {
+            'City': rawData.name,
+            'Hate_Speech_Rate': rawData.rate
+        });
+    });
+
+    layer0.on('mouseleave', function (ev) {
+        closeInfoWin();
+    });
+    
     layer0.setData(districts, {
         lnglat: 'center'
     });
