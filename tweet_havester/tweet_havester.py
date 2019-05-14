@@ -12,7 +12,7 @@ if __name__ == "__main__":
         password = a[3]
         server_path = 'http://' + username +':' + password +'@'+ip+':5984/'
     else:
-        server_path = 'http://'+a[1]
+        server_path = 'http://'+a[1] +':5984/'
     tStream.run(server_path)
     # wait for streamming for a while to start searching
     # time.sleep(200)
