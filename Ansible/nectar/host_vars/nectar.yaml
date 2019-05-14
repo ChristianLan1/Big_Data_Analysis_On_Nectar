@@ -2,15 +2,14 @@
 
 # availability zone
 availability_zone: melbourne-qh2-uom
+vol_availability_zone: melbourne-qh2
 
 # volume
 volumes:
-  - vol_name: master volume
+  - vol_name: vol_1
     vol_size: 10
-  - vol_name: automated_vol_1
-    vol_size: 30
-  - vol_name: automated_vol_2
-    vol_size: 30
+  - vol_name: vol_2
+    vol_size: 10
 
 # security groups
 security_groups:
@@ -43,16 +42,11 @@ security_groups:
 # instance
 instances:
   - instance_name: master
-    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
-    instance_key_name: xinjie
-    instance_flavor: uom.mse.1c4g
-  - instance_name: automated1
-    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
+    instance_image: 80601a5b-3bb8-40d5-8439-aa7f2070aed0
     instance_key_name: xinjie
     instance_flavor: uom.mse.2c9g
-  - instance_name: automated2
-    instance_image: 4c5b48a0-fb86-4f4f-a98b-81e3af15e2eb
+  - instance_name: worker
+    instance_image: 703d4362-dea8-425b-8654-313d50d40e03
     instance_key_name: xinjie
     instance_flavor: uom.mse.2c9g
-  
-  
+    

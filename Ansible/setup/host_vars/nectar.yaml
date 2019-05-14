@@ -5,8 +5,4 @@ volumes:
     mountpoint: /data
 
 # define the working directory
-working_dir: myWorkingDirectory
-
-
-
-
+web_directory: /home/ubuntu/ccc-assignment2-team69/web_app_django/

@@ -22,20 +22,21 @@
   pip:
     name: ['openstacksdk']
     state: latest
+       
+- name: Install git
+  become: yes
+  pip:
+    name: ['git']
+    state: latest
 
-#pip install docker
+- name: Install ansible
+  become: yes
+  pip:
+    name: ['ansible']
+    state: latest
+
 - name: Install docker
   become: yes
   pip:
     name: ['docker']
     state: latest
-
-# sudo apt-get install git
-- name: Install git
-    become: yes
-    apt: 
-        name: ['git'] 
-        state: latest
-        update_cache: yes
-  when: ansible_distribution == "Ubuntu"
-       

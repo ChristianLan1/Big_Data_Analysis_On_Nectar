@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+  couchdb:
+    image: "couchdb:2.3.0" 
+    hostname: couchdb.server
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: password
+    ports:
+      - "5984:5984"
+  web:
+    build: .
+    command: python /ccc-assignment2-team69/web_app_django/manage.py runserver 0.0.0.0:5555
+    volumes:
+      - .:/ccc-assignment2-team69/web_app_django/
+    ports:
+      - 5555:5555
+    depends_on:
+      - couchdb
+
+volumes:
+  couchdb:

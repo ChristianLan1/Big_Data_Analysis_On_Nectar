@@ -11,7 +11,7 @@
   tags: 'docker'
   become: yes
   apt:
-    name: ['apt-transport-https', 'ca-certificates', 'curl', 'python-setuptools', 'software-properties-common']
+    name: ['apt-transport-https', 'ca-certificates', 'curl', 'python-setuptools', 'software-properties-common', 'cron', 'gnupg2', 'aptitude']
     state: latest
     install_recommends: no
     update_cache: yes
@@ -27,7 +27,7 @@
   tags: 'docker'
   become: yes
   apt_repository: 
-    repo: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}"
+    repo: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ ansible_distribution_version }} "
     mode: '644'
     update_cache: yes
     state: present
@@ -36,7 +36,7 @@
   tags: 'docker'
   become: yes
   apt:
-    name: ['docker']
+    name: ['docker.io']
     state: latest
     install_recommends: no
     update_cache: yes
@@ -49,3 +49,14 @@
     version: 1.22.0
     state: present
 
+- name: add proxy to docker environment
+  lineinfile:
+    dest: /etc/default/docker
+    regexp: '^\n'
+    insertafter: '^\n'
+    line: "{{ item.line }}" 
+  with_items:
+    - { line: 'http_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'https_proxy="http://wwwproxy.unimelb.edu.au:8000"' } 
+    - { line: 'ftp_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'no_proxy=localhost,127.0.0.1,127.0.1.1,ubuntu' }

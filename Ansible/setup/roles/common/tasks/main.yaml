@@ -1,5 +1,17 @@
 # this file is for installing dependencies on the host
 
+- name: add internet proxy
+  lineinfile:
+    dest: /etc/environment
+    regexp: '^\n'
+    insertafter: '^\n'
+    line: "{{ item.line }}" 
+  with_items:
+    - { line: 'http_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'https_proxy="http://wwwproxy.unimelb.edu.au:8000"' } 
+    - { line: 'ftp_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
+    - { line: 'no_proxy=localhost,127.0.0.1,127.0.1.1,ubuntu' }
+
 - name: Gather facts of remote host
   setup:
     gather_subset: all
@@ -21,17 +33,38 @@
     name: ['pip']
     state: latest
 
-- name: add internet proxy
-  lineinfile:
-    dest: /etc/environment
+
+- name: add git ssh key
+  lineinfile: 
+    dest: /home/ubuntu/gitkey
     regexp: '^\n'
     insertafter: '^\n'
-    line: "{{ item.line }}" 
-  with_items:
-    - { line: 'http_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
-    - { line: 'https_proxy="http://wwwproxy.unimelb.edu.au:8000"' } 
-    - { line: 'ftp_proxy="http://wwwproxy.unimelb.edu.au:8000"' }
-    - { line: 'no_proxy=localhost,127.0.0.1,127.0.1.1,ubuntu' }
-
-
+    line: '-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAjPe0BGZNwfr7a3sLuZluxg0Bnle/bHjPsYdxfYFHAoZ1oXmk
+uEhlriIm6qFhAw64iqcKBNT7Mn/qY394Hb/ba+lSCk0RBUAEVlg4A6bkZm7gC4id
+yV2RVb+e5NWGqMBGGnwBqicWelMsSQ4gk/G6FDsXc2T+uPYDPwtbHe+GsnO1oMHE
+jTeCU4G9eeR3eYlClvBjpIXqjNbbrlL0UIweHwfNy8EQetyyyCdP5F5hWUFi7CEC
+duKQlOZPJFecEWREBwrFtVSBYfZKJNtGilDSp21wIhA8w9EuPFvlFn39Ih1xRPBS
+Yl7XRfxEEIAp/hxXi8m0gUwLL9lnf/R6r5KTBQIDAQABAoIBAGm7kSaLpV8N5W6k
+iBLZ5qBeOQyPPGEb7Ix3zsQYJy7Zs3k+SDKA+uM1coMiMCWe8QPubjFZnmAuWZvv
+jCSkNuwlwQdA7rdFYPtyh/EVSNMb7qg3/EGBEPWEGKYDElGYhfxvbsA1OULfB6R0
+GDNfZ/asq9Y9tmD9BUpQNjOp6RoHWtImEFlwBeGrENteYaD6eTL8Wo/WAjA0GZKI
+mSkofqdOKtkQzLSx0UKfxtcdOT7robAV4jszZNWe+ufaG8NLCdRH2dQFNMn7eqcJ
+fcwNXLmhgG3kWeIXKIycNssb9G2tQqaj0I2DAvqO998JimgQr4/TbFj1gqi96TO5
+DkZtGDECgYEAxU4RcWZWdyo2bg4ICTD2IVGJpDtodGS5BW3jJTEwbRuNjRQ+8riw
+t92ENjgi3SFAPBb23mk6TC6AKChPHaEquBaR+x/+G7XHABgETXwlxHgXJ0mWn76B
+GKEMjtJqtVFRp5eVl+daO2hzdxLcrGIWVkRtCn6wrRW1u1c6puUrRPsCgYEAtuc2
+t7AdsCOaKmli1NH1dvxWMwZ0Fvx7se2uo43sg5SwzLWdStSS5ip7DeNKSMO3vOJq
+b5/4Yq8U4qRY9/EodXcuaVIzv/tinXe/OHAfeA55VV5bHfS0X/9m5pH4qPyYn6Oy
+TxDSEZj891S/yxhEoHiyUqlAFdikRuNS7e/iB/8CgYAmZ/TjQw1vssrXj2mnCF3Q
+zINjcaD6jySo1uQROEr54hQisx8xthvIHpl+yFyY+MD9MWcqkgckDyUpK/eCh/29
+yb7uyCJ5mF+9N++WeaUMYmf3YM6uF7IfbjH4lyLoWoTvf4VCBWm+CK35LrW/5HP+
+pOEo2tJfTsuKRQeItzE+AwKBgDIVmlwuc9K5zQt0FEYmwEq2ynvqdnuc49pTNZE/
+2dYmL0u/J7VIBHnWhB/Hb54BSh0E+xRZ/9A2FUgCrQIoHWYdHq5kfhtCITzxf4Fa
+4qMjg4Im9lh7m7D15R2aNzc/BCQi1T7lYkDDXfH0WRiqKpCuvFX6VrwkuMdYlGrn
+V0PNAoGBALgDUpcepUi+zetaORy2NPpzPVpGSMLMfjm8aQa07ZoKD31XBvkJjIn5
+02E1hJiTZMc2KUua3fbYCaoTcAgq49m9uJBV5FQqA/mfCnzOAB6TJbOnDouSDHmy
+vhkxD2LPDGboLnr34uRBIT5y0AWfqqSv+hOkmwOR2lBAQsOJ/5Mx
+-----END RSA PRIVATE KEY-----'
+    create: yes
        

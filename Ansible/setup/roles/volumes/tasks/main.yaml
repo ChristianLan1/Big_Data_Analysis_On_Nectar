@@ -37,7 +37,7 @@
     state: directory
   when: item.stat.exists == false
   with_items:
-    - "{{ directory_stat.results }}"
+    - "{{ directory_stats.results }}"
 
 # mount the volume to the instance
 - name: Mount device

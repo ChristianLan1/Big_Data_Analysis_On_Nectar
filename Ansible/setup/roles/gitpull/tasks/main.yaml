@@ -1,0 +1,14 @@
+# - name: git clone repo using ssh
+#   git:
+#     repo: git@gitlab.eng.unimelb.edu.au:christianLan/ccc-assignment2-team69.git
+#     dest: /home/ubuntu/CCC/
+#     clone: yes
+#     accept_hostkey: yes
+#     key_file: /home/ubuntu/gitkey
+
+
+- name: git clone repo using http
+  git:
+    repo: 'https://gitlab.eng.unimelb.edu.au/christianLan/ccc-assignment2-team69.git'
+    dest: /home/ubuntu/ccc-assignment2-team69
+    clone: yes

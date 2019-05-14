@@ -1,0 +1,37 @@
+- name: Create webserver directory
+  tags: 'webserver'
+  become: yes
+  file: 
+    path: "{{ web_directory }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    recurse: yes
+    state: directory
+
+- name: configure compose
+  tags: 'webserver'
+  become: yes
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ web_directory }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: build the image
+  docker_image: 
+    name: built-by-ansible
+    push: yes
+    path: "{{ web_directory }}"
+    state: present
+
+- name: Run docker compose
+
+  tags: 'webserver'
+  become: yes
+  docker_compose:
+    project_src: "{{ web_directory }}"
+    pull: yes
+    state: present
+    remove_orphans: yes
+    recreate: always
+    

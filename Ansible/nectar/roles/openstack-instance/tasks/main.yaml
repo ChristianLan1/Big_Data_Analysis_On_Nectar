@@ -19,11 +19,12 @@
   when: os_instance.openstack is defined
 
 #get a list of instance Ids from the return value of os_instance
-- name: Create a list of instance Ids
+- name: Create a list of instance Ids 
   set_fact:
     os_instance_ids: '{{ os_instance_ids|default([]) + [ item.id ] }}'
-  loop: '{{ os_instance.results }}'
+  loop: '{{ os_instance.results }}' 
 
 - debug:
     msg: "Instance {{ os_instance_ids }} has been created."
   when: os_instance.name is defined
+  

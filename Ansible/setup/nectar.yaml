@@ -5,9 +5,12 @@
   vars_files:
     - host_vars/nectar.yaml
   gather_facts: true
-
+    
   roles:
     - role: common
     - role: volumes
     - role: docker
+    - role: gitpull
+    - role: webserver
+
 
