@@ -57,7 +57,7 @@ class TweetSearchHavester():
             # print(dic)
             try:
                 p_dic = gp.data_process(dic,self.model)
-                print(p_dic)
+                # print(p_dic)
                 if p_dic != None:
                     process_db.save(p_dic)
                 db.save(dic)
