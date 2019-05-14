@@ -528,7 +528,7 @@ html {
     margin: 2rem 0;
     height: auto;
     word-wrap: break-word;
-    background-color:rgba(9, 75, 116, 0.264);
+    background-color:rgba(2, 123, 179, 0.747);
     color: white;
     background-clip: border-box;
     border-radius: .25rem;
@@ -541,7 +541,7 @@ html {
     display: block;
     color: rgb(253, 253, 253);
     position: absolute;
-    transform: translate(5%, -70%);
+    transform: translate(7%, -70%);
     font-size: 1.35rem;
     width: 33rem;
     padding: 0.75rem 1rem;

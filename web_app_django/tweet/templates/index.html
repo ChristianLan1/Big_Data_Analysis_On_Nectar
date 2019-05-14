@@ -128,6 +128,7 @@
 <!--<script src="./script/loca.js"></script>-->
 <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 <link rel="stylesheet" href="{% static 'css/hover_window.css' %}"/>
+<script src="https://webapi.amap.com/maps?v=1.4.12&key=393144ee0738b91f3e93b0c6d0c36562"></script>
 <script src="http://webapi.amap.com/loca?v=1.2.0&key=393144ee0738b91f3e93b0c6d0c36562"></script>
 <script src= "{% static 'js/infoshow.js' %}"></script>
 <script src = "https://www.gstatic.com/charts/loader.js"></script>
@@ -138,11 +139,11 @@
 <script src = "{% static 'js/district.js' %}"></script>
 
 <script>
-    
+    var rcmWins =[];
     var map = Loca.create('container', {
         mapStyle: 'amap://styles/070f548e06917955722ed5b9ac9a06f2',
         zoom: 4.5,
-        center: [150, -28]
+        center: [145, -28]
     });
 
     var layer = Loca.visualLayer({
@@ -152,7 +153,6 @@
         shape: 'circle'
     });
    
-
     
 
     layer.setData(districts, {
@@ -164,10 +164,10 @@
             radius: function(data){
                 return 15+data.value.size/4
             },
-            color: '#FFFF00',
-            borderColor: '#c5001f',
-            borderWidth: 1.5,
-            opacity: 0.6
+            color: '#FDE834',
+            // borderColor: '#c5001f',
+            // borderWidth: 1.5,
+            opacity: 0.7
         },
         
     });
@@ -192,7 +192,7 @@
         
         openInfoWin(map.getMap(), originalEvent, {
             'City': rawData.name,
-            'Hate_Speech_Rate': rawData.rate
+            'Hate Speech Rate': rawData.rate
         });
     });
 
@@ -207,14 +207,12 @@
     layer0.setOptions({
         style: {
             radius:8,
-            color: '#626262',
-            borderColor: '#626262',
-            borderWidth: 1.5,
+            color: '#e2431e',
             opacity: 0.8
         },
         selectStyle: {
             radius: 10,
-            color: '#ffe30a',
+            color: 'white',
             opacity: 0.8
         }
     });
@@ -236,32 +234,40 @@
             data.addColumn('number', 'Hate Speech Percentage');
            
             data.addRows([
-               ['Nsw',  nsw, syd],
-               ['Vic',  vic, mel],
-               ['Sa',  sa,  ade]
-              
-               
+               ['New South Wales',  nsw, syd],
+               ['Victoria',  vic, mel],
+               ['South Australia',  sa,  ade]
             ]);
                
             // Set chart options
             var options = {
-               hAxis: {
-                  title: 'State'
-               },
-               vAxis: {
-                  title: ''
-               },   
-               'width':450,
-               'height':350,
-               pointsVisible: true,
-               backgroundColor:"transparent" 
+                hAxis: {
+                    title: '',
+                    textStyle: {color: 'white'}
+                },
+                vAxis: {
+                    title: '',
+                    textStyle: {color: 'white'}
+                },
+                series: {
+                    0: { color: '#e2431e' },
+                    1: { color: '#FDE834' },  
+                }, 
+                chartArea:{left:50,top:50,width:'55%',height:'65%'}, 
+                'width':450,
+                'height':350,
+                pointsVisible: true,
+                backgroundColor:"transparent",
+                // colors: ['#f07f09']
+                legend: {position: 'labeled', textStyle: {color: 'white', fontSize: 12}}
             };
 
             // Instantiate and draw the chart.
-            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
             chart.draw(data, options);
          }
          google.charts.setOnLoadCallback(drawChart);
+         rcmWins = showRcmWin(map,districts)
 
 
 </script>

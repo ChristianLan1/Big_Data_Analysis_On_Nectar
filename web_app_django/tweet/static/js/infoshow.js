@@ -54,24 +54,19 @@ function closeInfoWin() {
 function showRcmWin(map,points){
     var coor;
     var name;
-    var price;
     if(points.length > 0){
-        rcmWins = []
         for(city in points){
-            if(points[city].price == 0){
-                continue
-            }
             coor = points[city]["center"].split(',')
             name = points[city]["name"]
-            price = points[city]["price"]
             var rcmWin = new AMap.Marker({
                 position:coor,
-                content: "<div class = 'marker_wrap' ><div class='marker_label'><p>"+name +" : " +price+"元</p></div></div>",
-                offset: new AMap.Pixel(-50, -35),
+                content: "<div class = 'marker_wrap' ><div class='marker_label'><p>" +name + "</p></div></div>",
+                offset: new AMap.Pixel(-5, -35),
             });
             rcmWins.push(rcmWin)
+            
         }
-        map.add(rcmWins)
+        map.getMap().add(rcmWins)
     }
     return rcmWins
 }
