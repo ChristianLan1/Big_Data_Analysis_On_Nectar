@@ -15,15 +15,15 @@ def data_process(tweet,model):
         return None 
     location = tweet['location']
     create_time = tweet['create_time']
-
+    flag = False
     for city in cities:
         #the location contains target city names
         if city in location.lower():
             #generalize city name
             location=city
-        else:
-            return None
-    
+            flag = True
+    if(not flag):
+        return None
     p_tweet={
     '_id':id,
     "create_time":create_time,
