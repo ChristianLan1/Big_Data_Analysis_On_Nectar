@@ -152,8 +152,8 @@
         type: 'point',
         shape: 'circle'
     });
+    rcmWins = showRcmWin(map,districts)
    
-    
 
     layer.setData(districts, {
         lnglat: 'center'
@@ -267,7 +267,6 @@
             chart.draw(data, options);
          }
          google.charts.setOnLoadCallback(drawChart);
-         rcmWins = showRcmWin(map,districts)
 
 
 </script>
