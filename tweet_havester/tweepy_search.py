@@ -1,6 +1,7 @@
 #  -*- coding: utf-8 -*-
 import json
 import os
+import time
 import couchdb
 import tweepy
 from tweepy import OAuthHandler
@@ -56,7 +57,7 @@ class TweetSearchHavester():
             # print(dic)
             try:
                 p_dic = gp.data_process(dic,self.model)
-                print(p_dic)
+                # print(p_dic)
                 if p_dic != None:
                     process_db.save(p_dic)
                 db.save(dic)
@@ -67,17 +68,27 @@ class TweetSearchHavester():
 
 
 
-if __name__ == '__main__':
-    couch = couchdb.Server('http://admin:password@127.0.0.1:5984/')
+def run(server_path):
+    couch = couchdb.Server(server_path)
     db = couch['user_id']
     # couch.create('test_db')
-    city = ["melbourne","sydney","perth","adelaide","brisbane"]
+    dict = {}
+    with open('./tweet_havester_config.json','r') as f:
+        dict = json.load(f)
+    cities = []
+    for city in dict:
+        cities.append(city)
     switch = 0
     count = 0
     ids = list()
     a = TweetSearchHavester(couch)
-    while True:
-        print("start a new round")
+    while True:   
+        ids = list()
+        # if user id pool less than 40, won't start for query search
+        if(len(db) < 40):
+            time.wait(100)
+            continue
+        print("start a new round on search")
         for id in db:
             data = db[id]
             if(not data['isSearched']):
@@ -88,7 +99,7 @@ if __name__ == '__main__':
             if(count > 20):
                 switch = (switch+1)%5
                 count = 0
-                a.run(ids,city[switch])
+                a.run(ids,cities[switch])
                 for id in ids:
                     data = db[id]
                     data['isSearched'] = True

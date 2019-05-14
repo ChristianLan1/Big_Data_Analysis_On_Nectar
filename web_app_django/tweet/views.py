@@ -69,7 +69,9 @@ def index(request):
                 #print(doc.value[element])
                 countDomesitc += doc.value[element]
         countDomesitc += len(countId)
+        countDomesitc = (countDomesitc/7410000)*100
         print(countDomesitc)
+        
         context['NswCount'] = countDomesitc
             
             #print(docs[doc]['features'])
@@ -91,6 +93,8 @@ def index(request):
                             continue
                         else:
                             count += properties[element]
+            
+            count = (count/5740000)*100
             print(count)
             context['VicCount'] = count
         docsSa = SERVER['aurin_sa']
@@ -104,6 +108,7 @@ def index(request):
                         if not properties[element] == None:
                             #print(countForSa)
                             countForSa += properties[element]
+        countForSa = (countForSa/1677000)*100
         print(countForSa)
         context['SaCount'] = countForSa
 
@@ -111,7 +116,7 @@ def index(request):
 
 
 
-        docs = SERVER['tweet_2014_raw']
+        docs = SERVER['tweet_2014_results']
         cityInfoOld = []
         cityTotalOld = []
         cityPercentageOld = {}
@@ -123,7 +128,7 @@ def index(request):
             for data in cityInfoOld:
                 if data.key == doc.key:
                     number = (data.value/doc.value)*100
-                    percentage = str(round(number,2))+"%"
+                    percentage = round(number,2)
                     #print(percentage)
                     cityPercentageOld[data.key] = percentage
         cityTotalOld.append(cityPercentageOld)

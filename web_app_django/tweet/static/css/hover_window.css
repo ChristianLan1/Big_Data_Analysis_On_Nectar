@@ -1,0 +1,38 @@
+.window_info {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: .25rem;
+    background-color: rgba(50, 138, 175, 0.9);
+    width: auto;
+    min-width: 12rem;
+    border-width: 0;
+    /* right: 1rem; */
+    box-shadow: 0 4px 6px 0 rgba(50, 138, 175, 0.6);
+  }
+.window_info tr .content {
+    text-align: left;
+    color: rgb(234, 238, 232);
+    max-width: 200px;
+}
+.window_info tr .label {
+    text-align: left;
+    color: rgb(236, 225, 123);
+    max-width: 8rem;
+}
+
+.marker_wrap{
+    display: flex;
+    background-color: rgba(2, 123, 179, 0.747);
+    width: auto;
+    height: 2rem;
+    border: none;
+    border-radius: 0.3rem;
+    text-align: left;
+}
+.marker_label{
+    margin: auto;
+    flex: 1;
+    padding: 0 5px;
+    color: rgb(255, 255, 255);
+    line-height: 1.5rem;
+}
