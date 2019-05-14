@@ -35,7 +35,6 @@ class listener(StreamListener):
             content = json.loads(data)
             dic = self.convertValue(content)
             id_doc = {"_id":str(dic["user_id"]),"user_name":content['user']['name'],"isSearched":False}
-            print(id_doc)
             p_dic = gp.data_process(dic,self.model)
             if p_dic != None:
                 process_db.save(p_dic)
